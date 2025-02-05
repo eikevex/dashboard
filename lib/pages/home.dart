@@ -1,6 +1,8 @@
 import 'package:dashborad/controllers/dashBoardController.dart';
 import 'package:dashborad/pages/auth.dart';
+import 'package:dashborad/pages/dashboard.dart';
 import 'package:dashborad/widgets/background.dart';
+import 'package:dashborad/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,42 +37,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Background(
-      child: SafeArea(
+      body: Background(
+        child: SafeArea(
           child: Row(
-        children: [
-          Expanded(
-              child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/drawer_back.png'),
-                fit: BoxFit.cover,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SideMenu(),
               ),
-            ),
-            child: Column(
-              children: [
-                DrawerHeader(
-                    child: Image.asset('assets/images/logo_white.png')),
-                Material(
-                  type: MaterialType.transparency,
-                  child: ListTile(
-                    onTap: () {},
-                    leading: Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                    ),
-                    title: Text(
-                      'Configurações',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          )),
-          Expanded(flex: 5, child: Container())
-        ],
-      )),
-    ));
+              Expanded(flex: 5, child: Dashboard()),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
