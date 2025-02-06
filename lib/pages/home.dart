@@ -1,6 +1,7 @@
 import 'package:dashborad/controllers/dashBoardController.dart';
 import 'package:dashborad/pages/auth.dart';
 import 'package:dashborad/pages/dashboard.dart';
+import 'package:dashborad/utils/responsive.dart';
 import 'package:dashborad/widgets/background.dart';
 import 'package:dashborad/widgets/sideMenu.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +43,10 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: SideMenu(),
-              ),
+              if (Responsive.isDesktop(context))
+                Expanded(
+                  child: SideMenu(),
+                ),
               Expanded(flex: 5, child: Dashboard()),
             ],
           ),

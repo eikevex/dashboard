@@ -1,15 +1,60 @@
+import 'package:dashborad/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({
-    super.key,
-  });
+  const SideMenu({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(
+      key: key,
+      mobile: _MobileSideMenu(),
+      tablet: _DesktopSideMenu(),
+      desktop: _DesktopSideMenu(),
+    );
+  }
+}
+
+class _DesktopSideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      backgroundColor: Color(0xFF055383),
+      backgroundColor: Colors.blue[700],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            DrawerHeader(
+              child: Image.asset(
+                'assets/images/logo_white.png',
+              ),
+            ),
+            DrawerListTitle(press: () {}, title: 'Configurações'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MobileSideMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.menu, color: Colors.blue[700]),
+      onPressed: () {
+        Scaffold.of(context).openDrawer();
+      },
+    );
+  }
+}
+
+class MobileDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      backgroundColor: Colors.blue[700],
       child: SingleChildScrollView(
         child: Column(
           children: [

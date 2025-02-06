@@ -1,8 +1,10 @@
-import 'package:dashborad/constructors/cards.dart';
-import 'package:dashborad/utils/displayMounth.dart';
+import 'package:dashborad/controllers/reviewsController.dart';
 import 'package:dashborad/widgets/charts.dart';
+import 'package:dashborad/widgets/filters.dart';
 import 'package:dashborad/widgets/header.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -13,7 +15,18 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   List<double> monthlyData = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65];
+  List<double> assesmentData = [10, 15, 20];
   int? touchedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      final reviewsController = context.read<ReviewsController>();
+      await reviewsController
+          .fetchUserReviews(FirebaseAuth.instance.currentUser!.uid);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,42 +36,45 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           children: [
             Header(),
-            SizedBox(
-              height: 16.0,
-            ),
+            SizedBox(height: 16.0),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 5,
                   child: Container(
-                    height: 500,
-                    color: Colors.white60,
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Filters(),
+                        SizedBox(height: 16.0),
+                        BarChartWidget(),
+                      ],
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 16.0,
-                ),
+                SizedBox(width: 16.0),
                 Expanded(
                   flex: 2,
                   child: Container(
                     padding: EdgeInsets.all(16.0),
-                    height: 500,
                     decoration: BoxDecoration(
                       color: Colors.white60,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
                       children: [
                         Text(
-                          "Avaliações",
+                          'Avaliações',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(
-                          height: 16.0,
-                        ),
+                        SizedBox(height: 16.0),
                         PieChartWidget(
                           monthlyData: monthlyData,
                           onTouch: (index) {
@@ -67,27 +83,13 @@ class _DashboardState extends State<Dashboard> {
                             });
                           },
                         ),
-                        if (touchedIndex != null)
-                          DisplayMounth(
-                              touchedIndex: touchedIndex,
-                              monthlyData: monthlyData),
-                        Cards(
-                          icon: Icon(
-                            Icons.close,
-                            color: Colors.red,
-                          ),
-                          title: 'Negativas',
-                          color: Colors.red,
-                          amount: '132',
-                        ),
-                        Cards(
-                          title: 'Positivas',
-                          color: Colors.green,
-                          icon: Icon(
-                            Icons.check_sharp,
-                            color: Colors.green,
-                          ),
-                          amount: '200',
+                        PieChartAssesment(
+                          assesmentData: assesmentData,
+                          onTouch: (index) {
+                            setState(() {
+                              touchedIndex = index;
+                            });
+                          },
                         ),
                       ],
                     ),

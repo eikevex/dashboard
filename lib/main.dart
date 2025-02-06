@@ -1,3 +1,5 @@
+import 'package:dashborad/controllers/filterControllers.dart';
+import 'package:dashborad/controllers/reviewsController.dart';
 import 'package:dashborad/firebase_options.dart';
 import 'package:dashborad/pages/auth.dart';
 import 'package:dashborad/pages/home.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +20,12 @@ void main() async {
     await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   }
   await GetStorage.init();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => FilterManager()),
+      ChangeNotifierProvider(create: (_) => ReviewsController()),
+    ], child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

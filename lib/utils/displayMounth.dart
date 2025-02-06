@@ -12,12 +12,22 @@ class DisplayMounth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "${getMonthName(touchedIndex!)}: ${monthlyData[touchedIndex!]}",
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
+    return Column(
+      children: [
+        Text(
+          getMonthName(touchedIndex!),
+          style: TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          '${monthlyData[touchedIndex!]}',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
     );
   }
 
@@ -35,6 +45,47 @@ class DisplayMounth extends StatelessWidget {
       'Outubro',
       'Novembro',
       'Dezembro'
+    ];
+    return months[index];
+  }
+}
+
+class DisplayAvaliation extends StatelessWidget {
+  const DisplayAvaliation({
+    super.key,
+    required this.touchedIndex,
+    required this.assessment,
+  });
+
+  final int? touchedIndex;
+  final List<double> assessment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          getAssessmentName(touchedIndex!),
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          '${assessment[touchedIndex!]}',
+          style: TextStyle(
+            fontSize: 15,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String getAssessmentName(int index) {
+    List<String> months = [
+      'Ambiente',
+      'Espera',
+      'Atendimento',
     ];
     return months[index];
   }
