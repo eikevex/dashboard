@@ -1,10 +1,8 @@
-import 'package:dashborad/controllers/reviewsController.dart';
 import 'package:dashborad/widgets/charts.dart';
 import 'package:dashborad/widgets/filters.dart';
 import 'package:dashborad/widgets/header.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -14,18 +12,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  List<double> monthlyData = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65];
-  List<double> assesmentData = [10, 15, 20];
-  int? touchedIndex;
-
   @override
   void initState() {
     super.initState();
-    Future.microtask(() async {
-      final reviewsController = context.read<ReviewsController>();
-      await reviewsController
-          .fetchUserReviews(FirebaseAuth.instance.currentUser!.uid);
-    });
   }
 
   @override
@@ -75,22 +64,6 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                         SizedBox(height: 16.0),
-                        PieChartWidget(
-                          monthlyData: monthlyData,
-                          onTouch: (index) {
-                            setState(() {
-                              touchedIndex = index;
-                            });
-                          },
-                        ),
-                        PieChartAssesment(
-                          assesmentData: assesmentData,
-                          onTouch: (index) {
-                            setState(() {
-                              touchedIndex = index;
-                            });
-                          },
-                        ),
                       ],
                     ),
                   ),

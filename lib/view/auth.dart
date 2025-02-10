@@ -1,5 +1,5 @@
-  import 'package:dashborad/pages/home.dart';
-  import 'package:dashborad/pages/login.dart';
+  import 'package:dashborad/view/home.dart';
+  import 'package:dashborad/view/login.dart';
   import 'package:firebase_auth/firebase_auth.dart';
   import 'package:flutter/material.dart';
   import 'package:get/route_manager.dart';

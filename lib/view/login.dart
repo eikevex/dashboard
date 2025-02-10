@@ -37,13 +37,6 @@
       }
     }
 
-    String encodeId(String id) {
-      if (id.isEmpty) {
-        throw ArgumentError('O ID não pode ser vazio.');
-      }
-      return base64Url.encode(utf8.encode(id));
-    }
-
     Future<void> _signIn() async {
       try {
         UserCredential userCredential =
@@ -54,8 +47,7 @@
 
         User? user = userCredential.user;
         if (user != null) {
-          String encodedId = encodeId(user.uid);
-          Get.offNamed('/home/$encodedId');
+          Get.offNamed('/home/');
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

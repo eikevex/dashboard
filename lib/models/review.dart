@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Review {
   final String comment;
   final String cpf;
@@ -18,4 +20,20 @@ class Review {
     required this.userId,
     required this.waitingTime,
   });
+
+  factory Review.fromMap(Map<String, dynamic> map) {
+    return Review(
+        comment: map['comment'] ?? '',
+        cpf: map['cpf'] ?? '',
+        environment: map['environment'] ?? 0,
+        indication: map['indication'] ?? 0,
+        service: map['service'] ?? 0,
+        userId: map['userId'] ?? '',
+        waitingTime: map['waitingTime'] ?? 0,
+        date: map['date'] != null ? (map['date'] as Timestamp).toDate() : null);
+  }
+  @override
+  String toString() {
+    return 'Review(indication: $indication, comment: $comment, userId: $userId, service: $service, userId: $userId, cpf: $cpf, environment: $environment)';
+  }
 }
